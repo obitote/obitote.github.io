@@ -91,13 +91,66 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        
+        <h2 id="搭建博客"><a href="#搭建博客" class="headerlink" title="搭建博客"></a>搭建博客</h2><h3 id="本地预览"><a href="#本地预览" class="headerlink" title="本地预览"></a>本地预览</h3><ol>
+<li><p>建好仓库，并将仓库 git clone 到本地</p>
+</li>
+<li><p>安装 Node.js</p>
+</li>
+<li><p>在本地仓库文件夹中安装 Hexo：<code>npm install -g hexo-cli</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">D:\obitote.github.io&gt;npm install -g hexo-cli</span><br><span class="line">C:\Users\MI\AppData\Roaming\npm\hexo -&gt; C:\Users\MI\AppData\Roaming\npm\node_modules\hexo-cli\bin\hexo                   npm WARN optional SKIPPING OPTIONAL DEPENDENCY: fsevents@2.1.0 (node_modules\hexo-cli\node_modules\fsevents):            npm WARN notsup SKIPPING OPTIONAL DEPENDENCY: Unsupported platform for fsevents@2.1.0: wanted &#123;&quot;os&quot;:&quot;darwin&quot;,&quot;arch&quot;:&quot;any&quot;&#125; (current: &#123;&quot;os&quot;:&quot;win32&quot;,&quot;arch&quot;:&quot;x64&quot;&#125;)</span><br><span class="line"></span><br><span class="line">+ hexo-cli@3.0.0</span><br><span class="line">added 66 packages from 311 contributors in 47.361s</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>安装完成后初始化博客：<code>hexo init blog</code></p>
+</li>
+<li><p>测试效果，将终端目录切换到 blog 下，依次输入以下命令</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">hexo new test_my_site   <span class="comment"># 新建一篇博客文章</span></span><br><span class="line">hexo g  <span class="comment"># 生成网页</span></span><br><span class="line">hexo s  <span class="comment"># 在本地预览</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>打开浏览器，输入：<code>localhost:4000</code>，可看到我们写的第一篇博客</p>
+<h3 id="推送网站"><a href="#推送网站" class="headerlink" title="推送网站"></a>推送网站</h3></li>
+</ol>
+<ul>
+<li>blog / _config.yml ：<strong>站点</strong>配置文件</li>
+<li>blog / themes / _config.yml ：<strong>主题</strong>配置文件</li>
+</ul>
+<ol>
+<li><p>将 Hexo 与 GitHub 关联起来，打开<strong>站点</strong>的配置文件 _config.yml ，翻到最后修改为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">deploy: </span><br><span class="line">type: git</span><br><span class="line">repo: 这里填入你之前在GitHub上创建仓库的完整路径，记得加上 .git： https://github.com/obitote/obitote.github.io.git</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>保存配置文件，安装 Git 部署插件：<code>npm install hexo-deployer-git --save</code></p>
+</li>
+<li><p>输入以下命令：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">hexo clean </span><br><span class="line">hexo g </span><br><span class="line">hexo d</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>打开浏览器，输入：<code>https://obitote.github.io</code> 即可访问</p>
+<h3 id="更换主题"><a href="#更换主题" class="headerlink" title="更换主题"></a>更换主题</h3></li>
+</ol>
+<ul>
+<li><a href="https://hexo.io/themes/" target="_blank" rel="noopener">主题官网</a></li>
+</ul>
+<ol>
+<li>选择 xxx 主题，在 blog 目录中打开终端，输入 <code>git clone [themes的github地址] themes/xxx</code></li>
+<li>打开 blog / _config.yml 文件，将 <code>theme: landscape</code> 进行相应的修改</li>
+<li>打开 blog / themes / _config.yml 文件，找到 <strong>Scheme Settings</strong>，更改样式，如果有多个样式，则选择想要的那个，剩下的用 <code>#</code> 注释掉</li>
+<li>再部署网站：<code>hexo g</code>、<code>hexo d</code></li>
+</ol>
+<ul>
+<li>示例：选择 AirCloud 主题</li>
+</ul>
+<ol>
+<li>在 blog 目录中打开终端，输入 <code>git clone https://github.com/aircloud/hexo-theme-aircloud themes/AirCloud</code></li>
+</ol>
+<h3 id="hexo-命令"><a href="#hexo-命令" class="headerlink" title="hexo 命令"></a>hexo 命令</h3><ul>
+<li><code>npm install hexo -g</code>：安装 Hexo</li>
+<li><code>npm update hexo -g</code>：升级 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">hexo init   <span class="comment"># 初始化博客</span></span><br><span class="line"></span><br><span class="line">hexo n <span class="string">"我的博客"</span>   <span class="comment"># hexo new "我的博客" ：新建文章</span></span><br><span class="line">hexo g              <span class="comment"># hexo generate ：生成</span></span><br><span class="line">hexo s              <span class="comment"># hexo server：启动服务预览</span></span><br><span class="line">hexo d              <span class="comment"># hexo deploy：部署</span></span><br><span class="line"></span><br><span class="line">hexo server     <span class="comment"># Hexo 会监视文件变动并自动更新，无须重启服务器</span></span><br><span class="line">hexo server -s  <span class="comment"># 静态模式</span></span><br><span class="line">hexo server -p 5000     <span class="comment"># 更改端口</span></span><br><span class="line">hexo server -i 192.168.1.1  <span class="comment"># 自定义 IP</span></span><br><span class="line">hexo clean      <span class="comment"># 清除缓存，若是网页正常情况下可以忽略这条命令</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/10/07/test-my-site/" data-id="ck1fa2sof0000igullxaq047h" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/10/07/test-my-site/" data-id="ck1fa5i5q0001ssulhhlodkg8" class="article-share-link">Share</a>
       
       
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/测试/">测试</a></li></ul>
+
     </footer>
   </div>
   
@@ -144,7 +197,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/10/07/hello-world/" data-id="ck1fa2sok0001igul1ywec2we" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/10/07/hello-world/" data-id="ck1fa5i580000ssul3vb4qjj7" class="article-share-link">Share</a>
       
       
     </footer>
@@ -164,9 +217,23 @@
 
   
     
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/测试/">测试</a></li></ul>
+    </div>
+  </div>
+
 
   
     
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/测试/" style="font-size: 10px;">测试</a>
+    </div>
+  </div>
+
   
     
   <div class="widget-wrap">
