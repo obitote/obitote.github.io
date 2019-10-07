@@ -507,7 +507,85 @@
 
 </li>
 </ul>
-<h2 id="Docker-容器"><a href="#Docker-容器" class="headerlink" title="Docker 容器"></a>Docker 容器</h2><h3 id="容器的基本操作"><a href="#容器的基本操作" class="headerlink" title="容器的基本操作"></a>容器的基本操作</h3><h3 id="守护式容器"><a href="#守护式容器" class="headerlink" title="守护式容器"></a>守护式容器</h3><h3 id="在容器中部署静态网站"><a href="#在容器中部署静态网站" class="headerlink" title="在容器中部署静态网站"></a>在容器中部署静态网站</h3>
+<h2 id="Docker-容器"><a href="#Docker-容器" class="headerlink" title="Docker 容器"></a>Docker 容器</h2><h3 id="容器的基本操作"><a href="#容器的基本操作" class="headerlink" title="容器的基本操作"></a>容器的基本操作</h3><ol>
+<li><p>单次启动容器：<code>docker run IMAGE [COMMAND] [ARG...]</code></p>
+</li>
+<li><p>启动交互式容器：<code>docker run -i -t IMAGE /bin/bash</code></p>
+<ul>
+<li><code>-i</code>：标准输入</li>
+<li><code>-t</code>：分配终端</li>
+</ul>
+</li>
+<li><p>查看容器：<code>docker ps [-a] [-l]</code></p>
+<ul>
+<li><code>-a</code>：列出所有容器</li>
+<li><code>-l</code>：列出最新创建的容器</li>
+</ul>
+</li>
+<li><p>查看容器具体信息：<code>docker inspect [容器ID / 容器名]</code></p>
+</li>
+<li><p>自定义容器名：<code>docker run -name=自定义名 -i -t IMAGE /bin/bash</code> -&gt; 方便查看该容器</p>
+</li>
+<li><p>重启启动停止的容器：<code>docker start [-i] 容器名</code></p>
+</li>
+<li><p>删除停止的容器：<code>docker rm [容器名]</code></p>
+<h3 id="守护式容器"><a href="#守护式容器" class="headerlink" title="守护式容器"></a>守护式容器</h3><h4 id="守护石容器概念"><a href="#守护石容器概念" class="headerlink" title="守护石容器概念"></a>守护石容器概念</h4></li>
+<li><p>能够长期运行</p>
+</li>
+<li><p>没有交互式会话</p>
+</li>
+<li><p>适合运行应用程序和服务</p>
+<h4 id="以守护形式运行容器"><a href="#以守护形式运行容器" class="headerlink" title="以守护形式运行容器"></a>以守护形式运行容器</h4></li>
+<li><p>启动：<code>docker run -i -t IMAGE /bin/bash</code></p>
+</li>
+<li><p>用：<code>Ctrl + P</code> 和 <code>Ctrl + Q</code> 退出 bash</p>
+</li>
+<li><p>附加到运行中的容器：`docker attach 容器ID／容器名</p>
+<h4 id="以守护形式启动容器"><a href="#以守护形式启动容器" class="headerlink" title="以守护形式启动容器"></a>以守护形式启动容器</h4></li>
+<li><p>创建：<code>docker run -d IMAGE [COMMAND] [ARG...]</code> ，其中 <code>-d</code> 表示以后台的方式启动执行 COMMAND，当 COMMAND 结束时，命令也停止</p>
+</li>
+<li><p>查看容器中内部的运行情况：日志：<code>docker logs [-f] [-t] [-tail] 容器名</code></p>
+<ul>
+<li><code>-f</code> <code>--follows=true|false</code> ，默认为 <code>false</code> ：一直跟踪命令变化并返回结果</li>
+<li><code>-t</code> <code>--timestamps=true|false</code> ，默认为 <code>false</code>：在返回的结果时加上时间戳</li>
+<li><code>--tail = &quot;all&quot;</code> ：日志尾部，默认为 <code>all</code>，为 <code>0</code> 时表示最新的日志<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> docker run --name dc1 -d ubuntu /bin/sh -c <span class="string">"while true; do echo hello World; sleep 1; done"</span></span></span><br><span class="line"><span class="meta">$</span><span class="bash"> docker logs -ft --tail 0 dc1</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>查看容器内的进程：<code>docker top 容器名</code></p>
+</li>
+<li><p>在运行中的容器内启动新进程：<code>docker exec [-d] [-i] [-t] 容器名 [COMMAND] [ARG...]</code></p>
+<h4 id="停止守护形式"><a href="#停止守护形式" class="headerlink" title="停止守护形式"></a>停止守护形式</h4></li>
+<li><p><code>docker stop 容器名</code>：发送信号给容器，等待容器的停止</p>
+</li>
+<li><p><code>docker kill 容器名</code>：直接停止容器</p>
+<h3 id="在容器中部署静态网站"><a href="#在容器中部署静态网站" class="headerlink" title="在容器中部署静态网站"></a>在容器中部署静态网站</h3><h4 id="设置容器的端口映射"><a href="#设置容器的端口映射" class="headerlink" title="设置容器的端口映射"></a>设置容器的端口映射</h4></li>
+<li><p>设置容器的端口映射：<code>run [-P] [-p]</code></p>
+</li>
+</ol>
+<ul>
+<li><code>-P</code> <code>--publish-all=true|false</code>，默认是 <code>false</code>：将容器暴露的所有端口进行映射：<code>docker run -P -i -t ubuntu /bin/bash</code></li>
+<li><code>-p</code> <code>--publish=[]</code>：指定要映射的端口<ul>
+<li>containerPort：<code>docker run -p 80 -i -t ubuntu /bin/bash</code>（只指定容器端口，宿主机的端口是随机映射的）</li>
+<li>hostPort:containerPort：<code>docker run -p 8080:80 -i -t ubuntu /bin/bash</code>（同时指定宿主机端口和容器端口，一一对应）</li>
+<li>ip::containerPort：<code>docker run -p 0.0.0.0:80 -i -t ubuntu /bin/bash</code>（同时指定 IP 端口和容器端口）</li>
+<li>ip:hostPort:containerPort：<code>docker run -p 0.0.0.0:8080:80 -i -t ubuntu /bin/bash</code>（同时指定 IP 端口、宿主机端口和容器端口）<h4 id="Nginx-部署流程"><a href="#Nginx-部署流程" class="headerlink" title="Nginx 部署流程"></a>Nginx 部署流程</h4></li>
+</ul>
+</li>
+</ul>
+<ol>
+<li>创建映射 80 端口的交互式容器</li>
+<li>安装 Nginx</li>
+<li>安装文件编辑器 vim</li>
+<li>修改静态页面</li>
+<li>修改 Nginx 配置文件</li>
+<li>运行 Nginx</li>
+<li>验证网站访问<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br></pre></td><td class="code"><pre><span class="line">docker run -p 80 --name web -i -t ubuntu /bin/bash</span><br><span class="line">apt-get update </span><br><span class="line">apt-get install -y vim</span><br><span class="line"></span><br><span class="line"><span class="comment"># 更换源</span></span><br><span class="line">vim /etc/apt/sources.list</span><br><span class="line"><span class="comment"># sources.list</span></span><br><span class="line"><span class="comment"># 将原有内容删除，并替换为以下的阿里源</span></span><br><span class="line">deb http://mirrors.aliyun.com/ubuntu/ trusty main multiverse restricted universe</span><br><span class="line">deb http://mirrors.aliyun.com/ubuntu/ trusty-backports main multiverse restricted universe</span><br><span class="line">deb http://mirrors.aliyun.com/ubuntu/ trusty-proposed main multiverse restricted universe</span><br><span class="line">deb http://mirrors.aliyun.com/ubuntu/ trusty-security main multiverse restricted universe</span><br><span class="line">deb http://mirrors.aliyun.com/ubuntu/ trusty-updates main multiverse restricted universe</span><br><span class="line">deb-src http://mirrors.aliyun.com/ubuntu/ trusty main multiverse restricted universe</span><br><span class="line">deb-src http://mirrors.aliyun.com/ubuntu/ trusty-backports main multiverse restricted universe</span><br><span class="line">deb-src http://mirrors.aliyun.com/ubuntu/ trusty-proposed main multiverse restricted universe</span><br><span class="line">deb-src http://mirrors.aliyun.com/ubuntu/ trusty-security main multiverse restricted universe</span><br><span class="line">deb-src http://mirrors.aliyun.com/ubuntu/ trusty-updates main multiverse restricted universe</span><br><span class="line"></span><br><span class="line">apt-get clean</span><br><span class="line">apt-get update</span><br><span class="line"></span><br><span class="line"><span class="comment"># 安装</span></span><br><span class="line">apt-get install -y nginx</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">mkdir -p /var/www/html</span><br><span class="line"><span class="built_in">cd</span> /var/www/html</span><br><span class="line">vim index.html</span><br><span class="line"></span><br><span class="line"><span class="comment"># index.html</span></span><br><span class="line"><span class="comment">#&lt;html&gt;</span></span><br><span class="line"><span class="comment">#&lt;head&gt;</span></span><br><span class="line"><span class="comment">#  &lt;title&gt;Nginx in Docker&lt;/title&gt;</span></span><br><span class="line"><span class="comment">#&lt;head&gt;</span></span><br><span class="line"><span class="comment">#&lt;body&gt;</span></span><br><span class="line"><span class="comment">#  &lt;h1&gt;Hello, I'm website in Docker!&lt;/h1&gt;</span></span><br><span class="line"><span class="comment">#&lt;/body&gt;</span></span><br><span class="line"><span class="comment">#&lt;/html&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 配置 nginx 文件</span></span><br><span class="line">whereis nginx</span><br><span class="line">vim /etc/ngnix/sites-enabled/default</span><br><span class="line"><span class="comment"># 将 root 值修改为刚才建立的静态网站位置，保存并退出</span></span><br><span class="line">root /var/www/html;</span><br><span class="line"></span><br><span class="line"><span class="built_in">cd</span> /</span><br><span class="line">nginx</span><br><span class="line">ps -ef  <span class="comment"># 查看当前进程</span></span><br><span class="line">Ctrl + P 、 Ctrl + Q  <span class="comment"># 后台运行</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 验证网站是否可访问</span></span><br><span class="line">docker port web  <span class="comment"># 查看端口情况</span></span><br><span class="line">curl http://127.0.0.1:端口号  <span class="comment"># 能返回网页内容说明部署成功</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 也可以在浏览器中输入：http://127.0.0.1:32769 进行访问</span></span><br><span class="line"><span class="comment"># 然而网站是在 WSL 2 部署的，要用网页访问也是在 WSL 2 中的浏览器，使用 Win 10 浏览器是无法访问的</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 也可以使用容器的 IP 地址来访问，不需要指定端口号</span></span><br><span class="line">docker inspect web</span><br><span class="line"><span class="comment"># 查看 "IPAddress": "172.17.0.2"</span></span><br><span class="line">curl http://172.17.0.2</span><br><span class="line"><span class="comment"># 也可以在网页中输入 http://172.17.0.2 进行访问</span></span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<p>使用 <code>docker stop web</code> 后重新 <code>docker start -i web</code> 后 nginx 服务已经不在了，这时使用 <code>Ctrl + P</code> 、 <code>Ctrl + Q</code> 退出后使用 <code>docker exec web nginx</code>，但是使用 <code>curl http://172.17.0.2</code> 访问网页后就不行了，使用 <code>docker inspect web</code> 查看后<strong>发现 docker 的 IP 地址发生了变化，映射的端口也不一样了</strong></p>
+
           
         
       
